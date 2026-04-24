@@ -1,0 +1,7 @@
+Safety Protocol Version 3.2
+
+Weekly vehicle inspections are required every Monday before field deployment.
+Incident reports must be filed within 24 hours of any safety event.
+Any repeated hydraulic pressure issue must be escalated to the regional operations manager.
+Personal protective equipment audits occur every Friday.
+

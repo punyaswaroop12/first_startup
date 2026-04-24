@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ops-ai-api"
+version = "0.1.0"
+description = "Backend API for the AI Knowledge + Reporting Assistant MVP"
+requires-python = ">=3.12"
+dependencies = [
+  "alembic>=1.14.1",
+  "bcrypt>=4.2.1",
+  "cryptography>=44.0.1",
+  "fastapi>=0.115.6",
+  "httpx>=0.28.1",
+  "openai>=1.58.1",
+  "pgvector>=0.3.6",
+  "psycopg[binary]>=3.2.3",
+  "pydantic-settings>=2.7.0",
+  "pydantic[email]>=2.10.4",
+  "pypdf>=5.1.0",
+  "PyJWT>=2.10.1",
+  "python-docx>=1.1.2",
+  "python-multipart>=0.0.20",
+  "sqlalchemy>=2.0.36",
+  "structlog>=24.4.0",
+  "uvicorn[standard]>=0.34.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3.4",
+  "pytest-asyncio>=0.25.0",
+  "ruff>=0.8.4"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["B008", "E501", "UP042"]

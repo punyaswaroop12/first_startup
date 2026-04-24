@@ -1,0 +1,7 @@
+Maintenance Dispatch SOP
+
+Dispatchers must assign a priority code to every ticket.
+Priority 1 tickets require manager notification within 15 minutes.
+Technicians update ticket status at arrival, work start, and completion.
+If a part backlog exceeds 7 days, procurement must be notified and the case flagged in the weekly report.
+
