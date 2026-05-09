@@ -1,0 +1,153 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  PROPERTY_MANAGER
+  CONTRACTOR
+  ADMIN
+  HOMEOWNER
+}
+
+enum JobStatus {
+  DRAFT
+  POSTED
+  QUOTES_REQUESTED
+  QUOTES_RECEIVED
+  CONTRACTOR_SELECTED
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  REVIEWED
+  DISPUTED
+}
+
+model User {
+  id        String   @id
+  name      String
+  email     String   @unique
+  role      Role
+  company   String?
+  createdAt DateTime @default(now())
+}
+
+model Property {
+  id                   String @id
+  managerId            String
+  address              String
+  city                 String
+  neighborhood         String
+  units                Int
+  openMaintenanceCount Int
+  monthlySpendCents    Int
+}
+
+model Unit {
+  id         String @id
+  propertyId String
+  label      String
+  bedrooms   Int
+  tenantName String?
+}
+
+model MaintenanceJob {
+  id                 String    @id
+  managerId          String
+  propertyId         String
+  unitId             String?
+  title              String
+  category           String
+  urgency            String
+  status             JobStatus
+  description        String
+  accessInstructions String
+  budgetMinCents     Int
+  budgetMaxCents     Int
+  assignedContractorId String?
+  createdAt          DateTime  @default(now())
+}
+
+model Contractor {
+  id                    String  @id
+  businessName          String
+  ownerName             String
+  trades                String
+  serviceAreas          String
+  minimumJobPriceCents  Int
+  hourlyRateCents       Int
+  licenseNumber         String?
+  insuranceExpiresAt    DateTime?
+  emergencyAvailable    Boolean @default(false)
+  responseMinutes       Int
+  reliabilityScore      Int
+  completedJobs         Int
+  repeatHireRate        Float
+  licenseVerified       Boolean @default(false)
+  insuranceVerified     Boolean @default(false)
+}
+
+model Quote {
+  id                  String  @id
+  jobId               String
+  contractorId        String
+  priceCents          Int
+  timeline            String
+  warranty            String
+  materialsIncluded   Boolean
+  completionRate      Int
+  notes               String
+}
+
+model Review {
+  id                 String  @id
+  jobId              String
+  contractorId       String
+  managerId          String
+  showedOnTime       Int
+  priceMatchedQuote  Int
+  qualityOfWork      Int
+  communication      Int
+  wouldHireAgain     Boolean
+  comment            String
+}
+
+model Message {
+  id        String   @id
+  jobId     String
+  senderId  String
+  body      String
+  createdAt DateTime @default(now())
+}
+
+model SubscriptionPlan {
+  id          String @id
+  name        String
+  audience    String
+  priceCents  Int
+  interval    String
+  features    String
+}
+
+model Invoice {
+  id          String   @id
+  userId      String
+  planId      String
+  amountCents Int
+  status      String
+  issuedAt    DateTime @default(now())
+}
+
+model AdminVerification {
+  id                 String  @id
+  contractorId       String
+  licenseStatus      String
+  insuranceStatus    String
+  backgroundStatus   String
+  riskNotes          String
+  featuredContractor Boolean @default(false)
+}
